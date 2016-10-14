@@ -1,5 +1,5 @@
 
-
+//Header file
 #include  "../include/lane.hpp"
 
 
@@ -43,17 +43,6 @@ int main()
 
 	int i, j, k;
 
-	/*display edge segments
-	for(i=0;i<n_segments;i++)
-		cout<<img_segments[i].rows<<" "<<img_segments[i].cols<<endl;
-	
-	for(i=0;i<n_segments;i++)
-  	{
-  		window_name<<"edges"<<i<<"";
-  		imshow(window_name.str(), img_segments[i]);
-  		window_name.str("");
-  	}*/
-
 	vector<Vec4i> lines[n_segments];
 	int hough_threshold[5]={30, 30, 40, 50, 50};
 	int hough_minLineLength[5]={20, 25, 25, 30, 50};
@@ -71,17 +60,7 @@ int main()
   			Vec4i l = lines[i][j];
   			line( line_segments[i], Point(l[0], l[1]), Point(l[2], l[3]), Scalar(0,0,255), 3, CV_AA);
   		}
-
-
-  	/* display line segments
-  	for(i=0;i<n_segments;i++)
-  	{
-  		window_name<<"window"<<i<<"";
-  		imshow(window_name.str(), line_segments[i]);
-  		window_name.str("");
-  	}*/
-
-
+	
   	Mat line=img-img;
   	merge_segments(line_segments, line, segments, n_segments);
   	imshow("detected lines",line);
@@ -135,8 +114,6 @@ int main()
   			max_votes=current_votes;
   			max_i=i;
   		}
-
-  		//cout<<i<<" "<<current_votes<<endl;
   	}
 
   	int vanish_row=max_i-25;
@@ -146,9 +123,7 @@ int main()
   	Mat output(1200, 1000, CV_8UC3, Scalar(0));
   	line.copyTo(output(cv::Rect(0, 200, 1000, 1000)));
   	cv::line( output, Point(0, 1200-vanish_row), Point(1000, 1200-vanish_row), Scalar(255,0,0), 10, CV_AA, 0);
-  	//line( output, Point(0, 1000-vanish_row), Point(1000, 1000-vanish_row), Scalar(255,0,0), 10, CV_AA);
-
-
+  	
   	imshow("output", output);
 
   	Mat lanes(1000, 1000, CV_8UC3, Scalar(0));
@@ -175,16 +150,7 @@ int main()
 
   					cv::line( lanes_segments[i], Point(lines[i][j][0], lines[i][j][1]), Point(lines[i][j][2], lines[i][j][3]), Scalar(255,0,0), 3, CV_AA, 0);
   					cv::line( lanes_segments[i], Point(lines[i][k][0], lines[i][k][1]), Point(lines[i][k][2], lines[i][k][3]), Scalar(255,0,0), 3, CV_AA, 0);
-  					/*imshow("please", lanes_segments[i]);
-
-  					Mat temp(segments[i], 1000, CV_8UC3, Scalar(0));
-  					cv::line( temp, Point(lines[i][j][0], lines[i][j][1]), Point(lines[i][j][2], lines[i][j][3]), Scalar(255,0,0), 3, CV_AA, 0);
-  					cv::line( temp, Point(lines[i][k][0], lines[i][k][1]), Point(lines[i][k][2], lines[i][k][3]), Scalar(255,0,0), 3, CV_AA, 0);
-
-  					imshow("verify", temp);
-
-  					waitKey(2000);*/
-
+  					
   				}	
   			}
   	}
